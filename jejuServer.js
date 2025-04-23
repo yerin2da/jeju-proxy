@@ -4,7 +4,8 @@ const axios = require('axios');
 const cors = require('cors');
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
+
 
 // const apiKey = process.env.REACT_APP_API_CULTURE//문화공공데이터
 // const apiKey2 =process.env.REACT_APP_API_JEJU //비짓제주
