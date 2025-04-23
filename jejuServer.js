@@ -54,7 +54,7 @@ app.get('/api/jeju-festival', async (req, res) => {
 
         console.log("🔍 받은 pageNo:", page);
 
-        const response = await axios.get('http://api.visitjeju.net/vsjApi/contents/searchList', {
+        const response = await axios.get('https://api.visitjeju.net/vsjApi/contents/searchList', {
             params: {
                 apiKey: "a385f7dd89314985b6bce5245117e41b",
                 page,
