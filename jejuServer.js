@@ -49,8 +49,7 @@ app.get('/api/jeju-culture', async (req, res) => {
 app.get('/api/jeju-festival', async (req, res) => {
     try {
         // 프론트에서 넘긴 모든 쿼리 파라미터 받기
-        const { page, locale, category } = req.query;
-
+        const { page, locale, category, pageSize, } = req.query;
 
         console.log("🔍 받은 pageNo:", page);
 
@@ -60,6 +59,7 @@ app.get('/api/jeju-festival', async (req, res) => {
                 page,
                 locale,
                 category,
+                pageSize,
             },
             headers: {
                 'Accept': 'application/json'
