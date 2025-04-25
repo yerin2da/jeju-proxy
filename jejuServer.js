@@ -42,7 +42,7 @@ app.get('/api/jeju-culture', async (req, res) => {
         });
 
         const parser = new XMLParser();  // 파서 생성
-        const jsonData = parser.parse(response.data);  //  XML → JSON 변환
+        const jsonData = parser.parse(response.data);  // ✅ XML → JSON 변환
 
         res.json(jsonData);  // ✅ 변환된 JSON 반환
     } catch (error) {
