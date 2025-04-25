@@ -39,7 +39,8 @@ app.get('/api/jeju-culture', async (req, res) => {
                 type: 'json'
             },
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Host': 'api.kcisa.kr'
             },
             responseType: 'text'  //  XML로 받을 준비
         });
