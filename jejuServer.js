@@ -73,7 +73,8 @@ app.get('/api/jeju-festival', async (req, res) => {
                 cid
             },
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Host': 'api.kcisa.kr'
             }
         });
 
