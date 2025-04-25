@@ -4,6 +4,7 @@ const axios = require('axios');
 const cors = require('cors');
 const dns = require('dns');
 const { XMLParser } = require('fast-xml-parser');  // XML 파서
+const he = require('he');
 
 // 🌟 Cloudflare Public DNS 설정!
 dns.setServers(['1.1.1.1', '1.0.0.1', '8.8.8.8']);
@@ -45,10 +46,16 @@ app.get('/api/jeju-culture', async (req, res) => {
             responseType: 'text'  //  XML로 받을 준비
         });
 
-        const parser = new XMLParser();  // 파서 생성
-        const jsonData = parser.parse(response.data);  //  XML → JSON 변환
+        // XML → JSON 변환 + HTML 엔티티 디코딩
+        const parser = new XMLParser({
+            ignoreAttributes: false,
+            attributeNamePrefix: '',
+            tagValueProcessor: (val) => he.decode(val)  // 엔티티 디코딩
+        });
 
+        const jsonData = parser.parse(response.data);
         res.json(jsonData);  // ✅ 변환된 JSON 반환
+
     } catch (error) {
         console.error('🔴 API 호출 실패:', error.message);
         res.status(500).json({ error: 'API 호출 실패' });
@@ -74,7 +81,6 @@ app.get('/api/jeju-festival', async (req, res) => {
             },
             headers: {
                 'Accept': 'application/json',
-                'Host': 'api.kcisa.kr'
             }
         });
 
