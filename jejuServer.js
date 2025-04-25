@@ -2,9 +2,8 @@ require("dotenv").config();
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
-
 const dns = require('dns');
-const parser = require("prettier/parser-flow");
+const { XMLParser } = require('fast-xml-parser');  // XML 파서
 
 // 🌟 Cloudflare Public DNS 설정!
 dns.setServers(['1.1.1.1', '1.0.0.1']);
@@ -42,8 +41,10 @@ app.get('/api/jeju-culture', async (req, res) => {
             responseType: 'text'  //  XML로 받을 준비
         });
 
-        const jsonData = parser.parse(response.data);  // 👈 XML → JSON 변환
-        res.json(jsonData);
+        const parser = new XMLParser();  // 파서 생성
+        const jsonData = parser.parse(response.data);  //  XML → JSON 변환
+
+        res.json(jsonData);  // ✅ 변환된 JSON 반환
     } catch (error) {
         console.error('🔴 API 호출 실패:', error.message);
         res.status(500).json({ error: 'API 호출 실패' });
