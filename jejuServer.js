@@ -6,8 +6,10 @@ const dns = require('dns');
 const { XMLParser } = require('fast-xml-parser');  // XML 파서
 
 // 🌟 Cloudflare Public DNS 설정!
-dns.setServers(['1.1.1.1', '1.0.0.1']);
-
+dns.setServers(['1.1.1.1', '1.0.0.1', '8.8.8.8']);
+dns.lookup('api.kcisa.kr', (err, address, family) => {
+    console.log('KCISA IP 주소:', address);
+});
 const app = express();
 const port = process.env.PORT || 5000;
 
