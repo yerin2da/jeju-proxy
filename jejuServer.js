@@ -7,9 +7,7 @@ const { XMLParser } = require('fast-xml-parser');  // XML 파서
 
 // 🌟 Cloudflare Public DNS 설정!
 dns.setServers(['1.1.1.1', '1.0.0.1', '8.8.8.8']);
-dns.lookup('api.kcisa.kr', (err, address, family) => {
-    console.log('KCISA IP 주소:', address);
-});
+
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -22,6 +20,9 @@ app.use(cors({
 
 //문화 공공데이터 - 메인 전시, 뮤지컬, 연주회
 app.get('/api/jeju-culture', async (req, res) => {
+    dns.lookup('api.kcisa.kr', (err, address, family) => {
+        console.log('KCISA IP 주소:', address);
+    });
     try {
         // 프론트에서 넘긴 모든 쿼리 파라미터 받기
         const { pageNo, numOfRows, dtype, title } = req.query;
