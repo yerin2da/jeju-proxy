@@ -5,8 +5,8 @@ const cors = require('cors');
 
 const dns = require('dns');
 
-// 🌟 Cloudflare Public DNS 설정!
-dns.setServers(['1.1.1.1', '1.0.0.1']);
+// Google + Cloudflare DNS 함께 설정
+dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1']);
 
 const app = express();
 const port = process.env.PORT || 8000;
