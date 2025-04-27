@@ -9,11 +9,11 @@ const dns = require('dns');
 dns.setServers(['1.1.1.1', '1.0.0.1']);
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 app.use(cors({
     origin: [
-        'http://localhost:3001',                    // 로컬 개발용
+        'http://localhost:3000',                    // 로컬 개발용
         'https://yerin2da.github.io'                // 배포용 (gh-pages)
     ]
 }));
