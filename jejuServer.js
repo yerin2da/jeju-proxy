@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 const express = require('express');
 const axios = require('axios');
@@ -17,6 +18,23 @@ app.use(cors({
         'https://yerin2da.github.io'                // 배포용 (gh-pages)
     ]
 }));
+const helmet = require('helmet');
+
+// helmet 기본 보안 설정
+app.use(helmet());
+
+// CSP 설정 (스타일시트, 폰트, 이미지 등 허용)
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: ["'self'"],
+            styleSrc: ["'self'", "https:", "https://fonts.googleapis.com", "https://*.gstatic.com", "'unsafe-inline'"], // 외부 스타일시트 허용
+            fontSrc: ["'self'", "https:", "data:"],            // 폰트
+            imgSrc: ["'self'", "https:", "data:"],             // 이미지
+            scriptSrc: ["'self'", "https:", "'unsafe-inline'"], // 스크립트
+        },
+    })
+);
 
 //문화 공공데이터 - 메인 전시, 뮤지컬, 연주회
 app.get('/api/jeju-culture', async (req, res) => {
