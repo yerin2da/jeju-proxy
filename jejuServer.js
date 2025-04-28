@@ -2,7 +2,7 @@
 require("dotenv").config();
 const express = require('express');
 const axios = require('axios');
-const axiosRetry = require('axios-retry');
+const axiosRetry = require('axios-retry').default;
 
 axiosRetry(axios, { retries: 3, retryDelay: axiosRetry.exponentialDelay });
 const cors = require('cors');
