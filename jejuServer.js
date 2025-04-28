@@ -2,6 +2,9 @@
 require("dotenv").config();
 const express = require('express');
 const axios = require('axios');
+const axiosRetry = require('axios-retry');
+
+axiosRetry(axios, { retries: 3, retryDelay: axiosRetry.exponentialDelay });
 const cors = require('cors');
 
 const dns = require('dns');
@@ -63,8 +66,12 @@ app.get('/api/jeju-culture', async (req, res) => {
         res.json(response.data);
     } catch (error) {
         console.error('🔴 API 호출 실패:', error.message);
-        res.status(500).json({ error: 'API 호출 실패' });
+        if (error.response) {
+            console.error('🔴 상태 코드:', error.response.status);
+        }
+        res.status(500).json({ error: 'API 호출 실패', details: error.message });
     }
+
 });
 
 // 비짓제주 - 메인 축제/행사
