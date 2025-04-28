@@ -103,6 +103,15 @@ app.get('/api/jeju-festival', async (req, res) => {
     }
 });
 
+// 여행가이드 댓글
+app.get('/posts', (req, res) => {
+    const postId = req.query.postId;
+    res.json([
+        { id: 1, body: '댓글입니다.', postId },
+        // 실제 데이터 반환
+    ]);
+});
+
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`🚀 서버 실행 중: http://localhost:${port}`);
