@@ -114,5 +114,5 @@ app.get('/posts', (req, res) => {
 
 
 app.listen(port, '0.0.0.0', () => {
-    console.log(`🚀 서버 실행 중: http://localhost:${port}`);
+    console.log(`🚀 서버 실행 중: http://0.0.0.0:8000`);
 });
