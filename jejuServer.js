@@ -15,7 +15,7 @@ dns.setServers(['1.1.1.1', '1.0.0.1', '8.8.8.8', '8.8.4.4']);
 
 
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8080;
 
 app.use(cors({
     origin: [
@@ -114,5 +114,5 @@ app.get('/posts', (req, res) => {
 
 
 app.listen(port, '0.0.0.0', () => {
-    console.log(`🚀 서버 실행 중: http://0.0.0.0:8000`);
+    console.log(`🚀 서버 실행 중: http://0.0.0.0:8080`);
 });
