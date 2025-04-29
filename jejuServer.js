@@ -103,14 +103,50 @@ app.get('/api/jeju-festival', async (req, res) => {
     }
 });
 
-// 여행가이드 댓글
-app.get('/posts', (req, res) => {
-    const postId = req.query.postId;
-    res.json([
-        { id: 1, body: '댓글입니다.', postId },
-        // 실제 데이터 반환
-    ]);
+const comments = []; // 임시 저장소
+
+// 댓글 목록 조회
+app.get('/comments', (req, res) => {
+    const { postId } = req.query;
+    const filteredComments = comments.filter(c => c.postId === postId);
+    res.json(filteredComments);
 });
+
+// 댓글 등록
+app.post('/comments', (req, res) => {
+    const newComment = {
+        id: Math.random().toString(36).substr(2, 4),
+        title: req.body.title,
+        postId: req.body.postId,
+    };
+    comments.push(newComment);
+    res.json(newComment);
+});
+
+// 댓글 수정
+app.put('/comments/:id', (req, res) => {
+    const { id } = req.params;
+    const index = comments.findIndex(c => c.id === id);
+    if (index !== -1) {
+        comments[index] = { ...comments[index], ...req.body };
+        res.json(comments[index]);
+    } else {
+        res.status(404).json({ error: 'Comment not found' });
+    }
+});
+
+// 댓글 삭제
+app.delete('/comments/:id', (req, res) => {
+    const { id } = req.params;
+    const index = comments.findIndex(c => c.id === id);
+    if (index !== -1) {
+        comments.splice(index, 1);
+        res.status(204).send();
+    } else {
+        res.status(404).json({ error: 'Comment not found' });
+    }
+});
+
 
 
 app.listen(port, '0.0.0.0', () => {
