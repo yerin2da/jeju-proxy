@@ -123,6 +123,7 @@ try {
 
 // 댓글 목록 조회
 app.get('/api/comments', (req, res) => {
+    console.log("💬 댓글 요청 들어옴:", req.query);
     const { postId } = req.query;
     const filteredComments = db.comments.filter(c => c.postId === postId);
     res.json(filteredComments);
