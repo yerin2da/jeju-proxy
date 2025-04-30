@@ -122,14 +122,14 @@ try {
 }
 
 // 댓글 목록 조회
-app.get('/comments', (req, res) => {
+app.get('/api/comments', (req, res) => {
     const { postId } = req.query;
     const filteredComments = db.comments.filter(c => c.postId === postId);
     res.json(filteredComments);
 });
 
 // 댓글 등록
-app.post('/comments', (req, res) => {
+app.post('/api/comments', (req, res) => {
     const newComment = {
         id: Math.random().toString(36).substr(2, 4),
         title: req.body.title,
@@ -141,7 +141,7 @@ app.post('/comments', (req, res) => {
 });
 
 // 댓글 수정
-app.put('/comments/:id', (req, res) => {
+app.put('/api/comments/:id', (req, res) => {
     const { id } = req.params;
     const index = db.comments.findIndex(c => c.id === id);
     if (index !== -1) {
@@ -154,7 +154,7 @@ app.put('/comments/:id', (req, res) => {
 });
 
 // 댓글 삭제
-app.delete('/comments/:id', (req, res) => {
+app.delete('/api/comments/:id', (req, res) => {
     const { id } = req.params;
     const index = db.comments.findIndex(c => c.id === id);
     if (index !== -1) {
