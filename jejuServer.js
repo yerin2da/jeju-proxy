@@ -12,36 +12,28 @@ dns.setServers(['1.1.1.1', '1.0.0.1', '8.8.8.8', '8.8.4.4']);
 axiosRetry(axios, { retries: 3, retryDelay: axiosRetry.exponentialDelay });
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
-// ✅ 미들웨어 순서 중요
+// ✅ 미들웨어
 app.use(express.json());
-
 app.use(cors({
-    origin: [
-        'http://localhost:3000',
-        'https://yerin2da.github.io'
-    ]
+    origin: ['http://localhost:3000', 'https://yerin2da.github.io']
 }));
-
 app.use(helmet());
-app.use(
-    helmet.contentSecurityPolicy({
-        directives: {
-            defaultSrc: ["'self'"],
-            styleSrc: ["'self'", "https:", "https://fonts.googleapis.com", "https://*.gstatic.com", "'unsafe-inline'"],
-            fontSrc: ["'self'", "https:", "data:"],
-            imgSrc: ["'self'", "https:", "data:"],
-            scriptSrc: ["'self'", "https:", "'unsafe-inline'"]
-        }
-    })
-);
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "https:", "https://fonts.googleapis.com", "https://*.gstatic.com", "'unsafe-inline'"],
+        fontSrc: ["'self'", "https:", "data:"],
+        imgSrc: ["'self'", "https:", "data:"],
+        scriptSrc: ["'self'", "https:", "'unsafe-inline'"]
+    }
+}));
 
 // 📦 문화 공공데이터
 app.get('/api/jeju-culture', async (req, res) => {
     try {
         const { pageNo, numOfRows, dtype, title } = req.query;
-        console.log("🔍 받은 pageNo:", pageNo);
         const response = await axios.get('http://api.kcisa.kr/openapi/CNV_060/request', {
             params: {
                 serviceKey: "386f66a1-ae62-4ae9-9fe9-b5625d6263bc",
@@ -55,10 +47,6 @@ app.get('/api/jeju-culture', async (req, res) => {
         });
         res.json(response.data);
     } catch (error) {
-        console.error('🔴 API 호출 실패:', error.message);
-        if (error.response) {
-            console.error('🔴 상태 코드:', error.response.status);
-        }
         res.status(500).json({ error: 'API 호출 실패', details: error.message });
     }
 });
@@ -67,7 +55,6 @@ app.get('/api/jeju-culture', async (req, res) => {
 app.get('/api/jeju-festival', async (req, res) => {
     try {
         const { page, locale, category, pageSize, cid } = req.query;
-        console.log("🔍 받은 pageNo:", page);
         const response = await axios.get('http://api.visitjeju.net/vsjApi/contents/searchList', {
             params: {
                 apiKey: "a385f7dd89314985b6bce5245117e41b",
@@ -81,7 +68,6 @@ app.get('/api/jeju-festival', async (req, res) => {
         });
         res.json(response.data);
     } catch (error) {
-        console.error('🔴 API 호출 실패:', error.message);
         res.status(500).json({ error: 'API 호출 실패' });
     }
 });
@@ -99,9 +85,8 @@ try {
 
 // 댓글 조회
 app.get('/api/comments', (req, res) => {
-    console.log("💬 댓글 요청 들어옴:", req.query);
     const { postId } = req.query;
-    const filtered = db.comments.filter(c => c.postId === postId);
+    const filtered = db.comments.filter(c => String(c.postId) === String(postId));
     res.json(filtered);
 });
 
@@ -148,7 +133,14 @@ function saveDb() {
     fs.writeFileSync(dbFilePath, JSON.stringify(db, null, 2));
 }
 
-// 서버 실행
+// 🚀 서버 시작 및 라우트 확인 로그
 app.listen(port, '0.0.0.0', () => {
     console.log(`🚀 서버 실행 중: http://0.0.0.0:${port}`);
+    console.log('🛣️  등록된 API 목록:');
+    app._router.stack
+        .filter(r => r.route)
+        .forEach(r => {
+            const method = Object.keys(r.route.methods)[0].toUpperCase();
+            console.log(`👉 ${method} ${r.route.path}`);
+        });
 });
