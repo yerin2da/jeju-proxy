@@ -16,10 +16,11 @@ dns.setServers(['1.1.1.1', '1.0.0.1', '8.8.8.8', '8.8.4.4']);
 
 const app = express();
 const port = process.env.PORT || 8080;
+app.use(express.json()); // JSON 파싱 미들웨어 추가
 
 app.use(cors({
     origin: [
-        'http://localhost:3000',                    // 로컬 개발용
+        'http://localhost:3000',                    // 로컬 개발시 리액트 주소
         'https://yerin2da.github.io'                // 배포용 (gh-pages)
     ]
 }));
@@ -103,12 +104,27 @@ app.get('/api/jeju-festival', async (req, res) => {
     }
 });
 
-const comments = []; // 임시 저장소
+
+// 여행 가이드 댓글
+const fs = require('fs');
+const path = require('path');
+
+const dbFilePath = path.join(__dirname, 'db.json');
+
+let db = { comments: [] };
+
+// 서버 시작 시 db.json 읽어오기
+try {
+    const data = fs.readFileSync(dbFilePath, 'utf8');
+    db = JSON.parse(data);
+} catch (error) {
+    console.error('db.json 읽기 실패:', error.message);
+}
 
 // 댓글 목록 조회
 app.get('/comments', (req, res) => {
     const { postId } = req.query;
-    const filteredComments = comments.filter(c => c.postId === postId);
+    const filteredComments = db.comments.filter(c => c.postId === postId);
     res.json(filteredComments);
 });
 
@@ -119,17 +135,19 @@ app.post('/comments', (req, res) => {
         title: req.body.title,
         postId: req.body.postId,
     };
-    comments.push(newComment);
+    db.comments.push(newComment);
+    saveDb();
     res.json(newComment);
 });
 
 // 댓글 수정
 app.put('/comments/:id', (req, res) => {
     const { id } = req.params;
-    const index = comments.findIndex(c => c.id === id);
+    const index = db.comments.findIndex(c => c.id === id);
     if (index !== -1) {
-        comments[index] = { ...comments[index], ...req.body };
-        res.json(comments[index]);
+        db.comments[index] = { ...db.comments[index], ...req.body };
+        saveDb();
+        res.json(db.comments[index]);
     } else {
         res.status(404).json({ error: 'Comment not found' });
     }
@@ -138,15 +156,20 @@ app.put('/comments/:id', (req, res) => {
 // 댓글 삭제
 app.delete('/comments/:id', (req, res) => {
     const { id } = req.params;
-    const index = comments.findIndex(c => c.id === id);
+    const index = db.comments.findIndex(c => c.id === id);
     if (index !== -1) {
-        comments.splice(index, 1);
+        db.comments.splice(index, 1);
+        saveDb();
         res.status(204).send();
     } else {
         res.status(404).json({ error: 'Comment not found' });
     }
 });
 
+// db.json 저장 함수
+function saveDb() {
+    fs.writeFileSync(dbFilePath, JSON.stringify(db, null, 2));
+}
 
 
 app.listen(port, '0.0.0.0', () => {

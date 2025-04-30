@@ -1,0 +1,95 @@
+{
+  "posts": [
+    {
+      "id": "70ab",
+      "title": "",
+      "author": ""
+    },
+    {
+      "id": "c841",
+      "title": "1",
+      "author": "1"
+    },
+    {
+      "id": "f5fd",
+      "title": "1",
+      "author": "1"
+    }
+  ],
+  "comments": [
+    {
+      "id": "b8c3",
+      "title": "예술상점ㅇㅇ",
+      "postId": "CNTS_200000000015093"
+    },
+    {
+      "id": "d9fd",
+      "title": "세화점방",
+      "author": "세화점뱅",
+      "postId": "CNTS_200000000015055"
+    },
+    {
+      "id": "629f",
+      "title": "ㅇㅇㅇㅇㅇㅇㅇㅇ",
+      "postId": "CNTS_200000000015093"
+    },
+    {
+      "id": "2a7c",
+      "title": "오 대박",
+      "postId": "CNTS_200000000009098"
+    },
+    {
+      "id": "1e08",
+      "title": "ㄴㄴㄴ",
+      "postId": "CNTS_200000000015093"
+    },
+    {
+      "id": "f832",
+      "title": "ㄹㄹ",
+      "postId": "CNTS_200000000015093"
+    },
+    {
+      "id": "fba6",
+      "title": "몽",
+      "postId": "CNTS_300000000012715"
+    },
+    {
+      "id": "i6nh",
+      "title": "ㅇㅇㅇ",
+      "postId": "CNTS_300000000012744"
+    },
+    {
+      "id": "vvhf",
+      "title": "xx",
+      "postId": "CNTS_300000000012726"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "test",
+      "password": "1234"
+    }
+  ],
+  "upload": [
+    {
+      "id": "e886",
+      "file_name": "test.jpg",
+      "src": "https://example.com/test.jpg",
+      "att_pk": 0
+    },
+    {
+      "id": "e7f8",
+      "file_name": "test.jpg",
+      "src": "https://example.com/test.jpg",
+      "att_pk": 0
+    }
+  ],
+  "delete": [
+    {
+      "id": "1",
+      "username": "test",
+      "password": "1234"
+    }
+  ]
+}
