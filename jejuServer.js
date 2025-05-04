@@ -72,6 +72,53 @@ app.get('/api/jeju-festival', async (req, res) => {
     }
 });
 
+// 통합 검색 API (문화 + 축제)
+app.get('/api/search', async (req, res) => {
+    const keyword = req.query.keyword || '';
+    try {
+        const [cultureRes, festivalRes] = await Promise.all([
+            axios.get('http://api.kcisa.kr/openapi/CNV_060/request', {
+                params: {
+                    serviceKey: "386f66a1-ae62-4ae9-9fe9-b5625d6263bc",
+                    pageNo: 1,
+                    numOfRows: 100,
+                    title: keyword,
+                    type: 'json'
+                },
+                headers: { 'Accept': 'application/json' }
+            }),
+            axios.get('http://api.visitjeju.net/vsjApi/contents/searchList', {
+                params: {
+                    apiKey: "a385f7dd89314985b6bce5245117e41b",
+                    locale: 'kr',
+                    page: 1,
+                    pageSize: 100,
+                    query: keyword
+                },
+                headers: { 'Accept': 'application/json' }
+            })
+        ]);
+
+        const cultureItems = cultureRes.data.response?.body?.items?.item || [];
+        const festivalItems = festivalRes.data.items || [];
+
+        const filteredCulture = cultureItems.filter(item => item.title?.includes('제주') && item.title?.includes(keyword));
+        const filteredFestival = festivalItems.filter(item => item.title?.includes(keyword));
+
+        const result = [
+            ...filteredCulture.map(i => ({ ...i, category: '문화', source: 'culture' })),
+            ...filteredFestival.map(i => ({ ...i, category: '축제', source: 'festival' }))
+        ];
+
+
+        res.json(result);
+
+    } catch (err) {
+        console.error('검색 에러:', err);
+        res.status(500).json({ error: '검색 실패' });
+    }
+});
+
 // 💬 댓글 관련
 const dbFilePath = path.join(__dirname, 'db.json');
 let db = { comments: [] };
@@ -137,10 +184,16 @@ function saveDb() {
 app.listen(port, '0.0.0.0', () => {
     console.log(`🚀 서버 실행 중: http://0.0.0.0:${port}`);
     console.log('🛣️  등록된 API 목록:');
-    app._router.stack
-        .filter(r => r.route)
-        .forEach(r => {
-            const method = Object.keys(r.route.methods)[0].toUpperCase();
-            console.log(`👉 ${method} ${r.route.path}`);
-        });
+
+    if (app._router && app._router.stack) {
+        app._router.stack
+            .filter(r => r.route)
+            .forEach(r => {
+                const method = Object.keys(r.route.methods)[0].toUpperCase();
+                console.log(`👉 ${method} ${r.route.path}`);
+            });
+    } else {
+        console.log('❗ 현재 등록된 라우터가 없습니다.');
+    }
 });
+
