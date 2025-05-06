@@ -51,7 +51,7 @@ app.get('/api/jeju-culture', async (req, res) => {
     }
 });
 
-// 📦 비짓제주 축제
+// 비짓제주 축제
 app.get('/api/jeju-festival', async (req, res) => {
     try {
         const { page, locale, category, pageSize, cid } = req.query;
@@ -119,7 +119,7 @@ app.get('/api/search', async (req, res) => {
     }
 });
 
-// 💬 댓글 관련
+//  댓글 관련
 const dbFilePath = path.join(__dirname, 'db.json');
 let db = { comments: [] };
 
