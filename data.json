@@ -1,0 +1,112 @@
+{
+  "continent":[
+    { "code": "ESA", "label": "동남아시아" },
+    { "code": "ENA", "label": "동북아시아" },
+    { "code": "SWA", "label": "서남아시아" },
+    { "code": "CA", "label": "중앙아시아" },
+    { "code": "ME", "label": "중동" },
+    { "code": "NA", "label": "북미" },
+    { "code": "LA", "label": "중남미" },
+    { "code": "OC", "label": "오세아니아" },
+    { "code": "EU", "label": "유럽" },
+    { "code": "NAF", "label": "북아프리카" },
+    { "code": "WAF", "label": "서아프리카" },
+    { "code": "CAF", "label": "중앙아프리카" },
+    { "code": "EAF", "label": "동아프리카" },
+    { "code": "SAF", "label": "남아프리카" },
+    { "code": "IOA", "label": "인도양 도서국" }
+  ],
+  "guideCategory": [
+    { "code": "all", "label": "전체" },
+    { "code": "system", "label": "시스템 점검" },
+    { "code": "update", "label": "업데이트" },
+    { "code": "security", "label": "보안" },
+    { "code": "etc", "label": "기타 공지" }
+  ],
+  "walletCategory": [
+    { "code": "myCoin", "label": "보유동전" },
+    { "code": "exchangeList", "label": "거래내역" }
+  ],
+  "jejuCategory" : [
+    { "label": "쇼핑",
+      "code": "c2",
+      "img": "shop"
+    },
+    { "label": "관광지",
+      "code": "c1",
+      "img": "map"
+    },
+    { "label": "숙소",
+      "code": "c3",
+      "img": "hotel"
+    },
+    { "label": "음식",
+      "code": "c4",
+      "img": "food"
+    },
+    { "label": "축제/행사",
+      "code": "c5",
+      "img": "festival"
+    }
+  ],
+  "jejuThemeCategory" : [
+      { "label": "아이들과 함께",
+        "txt": "자연이 놀이터가 되는 시간",
+        "code": "163",
+        "img": "family"
+      },
+      { "label": "커플끼리",
+        "txt": "둘이서 떠나는 설레는 여행길",
+        "code": "164",
+        "img": "couple"
+      },
+      { "label": "시티투어 버스",
+        "txt": "창밖으로 만나는 제주",
+        "code": "166",
+        "img": "tour"
+      },
+      { "label": "한라산의 숨결",
+        "txt": "자연과 함께하는 깊은 밤의 시간",
+        "code": "50",
+        "img": "hanra"
+      },
+      { "label": "나홀로",
+        "txt": "혼자여도 괜찮은, 나를 위한 여행",
+        "code": "391",
+        "img": "person"
+      },
+      { "label": "1박 2일",
+        "txt": "잠깐 떠나도 충분한 제주 여행",
+        "code": "392",
+        "img": "days2"
+      }
+
+  ],
+  "jejuStageCategory" : [
+      { "label": "국악",
+        "txt": "푸른 바람을 타고 퍼지는 \n우리의 선율",
+        "code": "korMusic",
+        "img": "korMusic"
+      },
+      { "label": "연극",
+        "txt": "감성으로 채워지는 제주\n그 깊은 울림",
+        "code": "play",
+        "img": "play"
+      },
+
+      { "label": "뮤지컬",
+        "txt": "자연과 예술이 맞닿는, \n마음을 울리는 감동",
+        "code": "musical",
+        "img": "musical"
+      },
+      { "label": "전시",
+        "code": "exhibition",
+        "img": "exhibition"
+      },
+      { "label": "음악회",
+        "code": "music",
+        "img": "music"
+      }
+  ]
+
+}
